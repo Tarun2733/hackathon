@@ -1,3 +1,5 @@
+
+////////////////////////////////////////////////////////////////////////////
 CREATE TABLE driverInfo (	
 	phNo bigint NOT NULL UNIQUE,
     	drName varchar(255) NOT NULL,
@@ -30,8 +32,9 @@ CREATE TABLE Book(
 	j_date datetime NOT NULL,
 	str_Point varchar(30) NOT NULL,
 	end_Point varchar(30) NOT NULL,
-	PRIMARY KEY (User_phno),
 	CHECK (gender = 'M' OR gender = 'F')
 );
 
 ////////////////////////////////////////////////////////////////////////////
+
+
