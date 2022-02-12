@@ -143,4 +143,38 @@ def main():
     Button(text="7-Cancellation",command=cnacel).pack()
 
 
+def d_display():
+    sql="Select * from book;"
+    cursor=mydb.cursor()
+    cursor.execute(sql)
+    row=cursor.fetchall()
+    Label(root,text=f"{row}")
+    Button(text="Log out",command=log_sign).pack()
+
+
+def dlogin():
+    #tid=input("Enter tracker id:")
+    tid=StringVar()
+    Label(roots,text=" Enter tracker id :").pack()
+    tid1=Entry(root,textvariable=tid)
+    tid1.pack()
+
+    #n=input("Enter name:")
+    n=StringVar()
+    Label(root,text="Enter name :").pack()
+    n2=Entry(root,textvariable=n)
+    n2.pack()
+
+    Label(root,text="You are logged in!").pack()
+    d_display()
+
+def log_sign():
+    
+    Button(text="Signup", command=signup).pack()
+
+    Button(text="Login", command=login).pack()
+
+    Button(text="Driver's Login", command=dlogin).pack()
+          
+          
 
