@@ -30,11 +30,7 @@ def show_available_trackers():
 
     Button(text="Main Menu",command=main).pack()
 
-def update_phone():
-    new_numb=StringVar()
-    Label(root,text="Enter New Number:").pack()
-    updated_phone=Entry(root,textvariable=new_numb)
-    updated_phone.pack()
+def ph_next():
     if len(str(updated_phone)) == 10:
         try:
             sql="UPDATE user_info set User_phno=%s WHERE user_id=%s"
@@ -50,6 +46,14 @@ def update_phone():
     else:
         Label(root,text="password less than 8 is not allowed.\n").pack()
         main()
+        
+def update_phone():
+    new_numb=StringVar()
+    Label(root,text="Enter New Number:").pack()
+    updated_phone=Entry(root,textvariable=new_numb)
+    updated_phone.pack()
+    Button(tex="Next",command=ph_next).pack()
+
         
 def main():
     Label(root,text="-----------============Welcome===========-------------- \n").pack()
