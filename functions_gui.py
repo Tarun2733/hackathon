@@ -53,6 +53,7 @@ def update_phone():
     updated_phone=Entry(root,textvariable=new_numb)
     updated_phone.pack()
     Button(tex="Next",command=ph_next).pack()
+    Button(text="Refresh",command=update_phone).pack()
 
         
 def main():
