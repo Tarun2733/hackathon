@@ -48,12 +48,80 @@ def ph_next():
         main()
         
 def update_phone():
-    new_numb=StringVar()
+    new_numb=IntVar()
     Label(root,text="Enter New Number:").pack()
     updated_phone=Entry(root,textvariable=new_numb)
     updated_phone.pack()
     Button(tex="Next",command=ph_next).pack()
     Button(text="Refresh",command=update_phone).pack()
+
+ 
+def book():
+    tracker= StringVar()
+    Label(root,text="Enter the Tracker ID : ").pack()
+    tracker_entry1=Entry(root,textvariable=tracker)
+    tracker_entry1.pack()
+
+   # n = input("Enter Passanger name  : ")
+    n=StringVar()
+    Label(root,text="Enter Passenger name :").pack()
+    n1=Entry(root,textvariable=n)
+    n1.pack()
+
+   # phno = int(input("Enter your phone number:"))
+    phno=IntVar()
+    Label(roots,text="Enter your phone number:").pack()
+    ph=Entry(root,textvariable=phno)
+    ph.pack()
+
+    #gen = input("Enter you gender(M/F):")
+    gen=StringVar()
+    Label(roots,text="Enter you gender(M/F) :").pack()
+    g1=Entry(root,textvariable=gen)
+    g1.pack()
+
+    now = datetime.now()
+
+    bookdate = now.strftime("%Y-%m-%d %H:%M:%S")
+    #j_date = input("Enter the date of journey : ")
+    j_date=IntVar()
+    Label(roots,text="Enter the date of journey:").pack()
+    d11=Entry(root,textvariable=j_date)
+    d11.pack()
+
+    #srt_point = input("Enter your current location: ")
+    srt_point=StringVar()
+    Label(roots,text=" Enter your current location :").pack()
+    sr1=Entry(root,textvariable=srt_point)
+    sr1.pack()
+
+    #end_point = input("Enter your destination: ")
+    end_point=StringVar()
+    Label(roots,text=" Enter your destination :").pack()
+    en1=Entry(root,textvariable=end_point)
+    en1.pack()
+
+    #num_seat = int(input("Enter the number of ticket you want to book : "))
+    num_seat = IntVar()
+    Label(roots,text="Enter the number of ticket you want to book :").pack()
+    se1=Entry(root,textvariable=num_seat)
+    se1.pack()
+
+
+    try:
+        sql = "INSERT INTO Book (trackerID , name, user_phno, gender, num_seats, Book_Date, j_date, str_Point, end_Point) VALUES({}, {}, {}, {}, {}, {}, {},{}, {});".format(tracker,n, phno, gen, num_seat ,bookdate ,j_date, srt_point, end_point)
+        cursor.execute(sql)
+        mydb.commit()
+
+        sql = "SELECT name, trackerID, num_seats ,j_date, str_point, end_point FROM Book WHERE user_phno = '{}'  ".format(phno)
+        cursor.execute(sql)
+        row=cursor.fetchall()
+        Label(root,text=f"{row}").pack()
+
+        Label(root,text=f"{ticket registered}").pack()
+    except exception as e:
+        Label(root,text=f"{e}")
+    main()
 
         
 def main():
