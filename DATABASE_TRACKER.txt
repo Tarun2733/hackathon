@@ -1,4 +1,3 @@
-////////////////////////////////////////////////////////////////////////////
 CREATE TABLE driverInfo (	
 	phNo bigint NOT NULL UNIQUE,
     	drName varchar(255) NOT NULL,
@@ -11,6 +10,7 @@ CREATE TABLE driverInfo (
 
 ///////////////////////////////////////////////////////////////////////////
 CREATE TABLE User_Info(
+	user_id bigint NOT NULL,
 	name varchar(255) NOT NULL,
 	age  int NOT NULL NOT NULL,
 	User_phno bigint PRIMARY KEY NOT NULL,
@@ -31,9 +31,7 @@ CREATE TABLE Book(
 	str_Point varchar(30) NOT NULL,
 	end_Point varchar(30) NOT NULL,
 	PRIMARY KEY (User_phno),
-	CHECK (gender = 'M' OR gernder = 'F')
+	CHECK (gender = 'M' OR gender = 'F')
 );
 
 ////////////////////////////////////////////////////////////////////////////
-
-
