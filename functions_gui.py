@@ -10,7 +10,45 @@ def show_available_trackers():
     Button(text="Main Menu",command=main).pack()
     Button(text="Refresh",command=show_available_trackers).pack()
    
+def check_confirm():
+     if confirmation == "y":
+            try:
+                sql="DELETE FROM book WHERE User_phno={};".format(phno)
+                cursor.execute(sql)
+                mydb.commit()
+                Label(root,text="Canceling sucessful.....").pack()
+                main()
+            except:
+                Label(root,text="failed").pack()
+                main()
+    Label(root,text="Canceling Terminated.....").pack()
+    main()
 
+
+def cancel():
+    Label(root,text="Go to view ticket section to know your ticket id.\n--------------------").pack()
+
+    phno=IntVar()
+    Label(roots,text="Enter your phone number:").pack()
+    ph1=Entry(root,textvariable=phno)
+    ph1.pack()
+
+    try:
+        sql="SELECT * FROM book WHERE User_phno={};".format(phno)
+        cursor.execute(sql)
+        a=cursor.fetchall()
+        Label(root,text=f"{a}").pack()
+        
+        confirmation=StringVar()
+        Label(root,text=" Do you want to cancel the above ticket? [y/n] :").pack()
+        confi1=Entry(root,textvariable=confirmation)
+        confi1.pack()
+        Button(text="Next",command=check_confirm).pack()
+    except:
+        Label(root,text="Canceling Terminated.....").pack()
+        main()    
+        
+        
  def enquiry():
     Label(root,text="Driver Info:\n").pack()
     sql = "Select phNo, drName, VacStat From driverInfo"
