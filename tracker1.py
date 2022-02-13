@@ -1,5 +1,7 @@
+from distutils.command.install_lib import PYTHON_SOURCE_EXTENSION
 import mysql.connector as a
 # import pyttsx3
+from datetime import datetime 
 from random import *
 
 
@@ -68,25 +70,59 @@ def show_available_trackers():
 
 def book():
     tracker = input("Enter the Tracker ID:")
-    phno = int(inout("Enter your phone number:"))
+    n = input("Enter Passanger name  : ")
+    phno = int(input("Enter your phone number:"))
     gen = input("Enter you gender(M/F):")
-    j_date = input("Enter Journey date:")
+    now = datetime.now()
+    bookdate = now.strftime("%Y-%m-%d %H:%M:%S")
+    # j_date = input("Enter Journey date:")
+    j_date = input("Enter the date of journey : ")
     srt_point = input("Enter your current location: ")
     end_point = input("Enter your destination: ")
-    number = int(input("Enter the number of ticket you want to book : "))
+    num_seat = int(input("Enter the number of ticket you want to book : "))
+    
+    try:
+        sql = "INSERT INTO Book (trackerID , name, user_phno, gender, num_seats, Book_Date, j_date, str_Point, end_Point) VALUES({}, {}, {}, {}, {}, {}, {},{}, {});".format(tracker,n, phno, gen, num_seat ,bookdate ,j_date, srt_point, end_point)
+        cursor.execute(sql)
+        mydb.commit()
 
-    for i in range(1, number + 1):
-        n = input("Enter Passanger name  : ")
-        age = int(input("Enter Passanger age : "))
-        try:
-            sql = "INSERT INTO Book (trackerID,name,user_phno,gender,j_date,str_Point,end_Point) VALUES ('{}',{},'{}','{}',{},{},'{}','{}')".format(
-                tracker, n, age, phno, gen, j_date, srt_point, end_point,)
-            cursor.execute(sql)
-            mydb.commit()
-            print(i, " ticket registered\n")
-        except exception as e:
-            print(e)
+        sql = "SELECT name, trackerID, num_seats ,j_date, str_point, end_point FROM Book WHERE user_phno = '{}'  ".format(phno)
+        cursor.execute(sql)
+        row=cursor.fetchall()
+        print("\n",row)
+
+        print("\nticket registered\n")
+    except exception as e:
+        print(e)
+
     main()
+
+def cancel():
+    print("Go to view ticket section to know your ticket id.\n--------------------")
+    phno = input("Enter your phone number : ")
+    try:
+        sql="SELECT * FROM book WHERE User_phno={};".format(phno)
+        cursor.execute(sql)
+        a=cursor.fetchall()
+        print(a)
+        confirmation = input("Do you want to cancel the above ticket? [y/n] : ")
+
+        if confirmation == "y":
+            try:
+                sql="DELETE FROM book WHERE User_phno={};".format(phno)
+                cursor.execute(sql)
+                mydb.commit()
+                print("Canceling sucessful.....") 
+                main()
+            except:
+                print("failed")
+                main()
+        print("Canceling Terminated.....")
+        main()
+
+    except:
+        print("Failed")
+        main()
     
 def enquiry():
     print("Driver Info:\n")
@@ -112,9 +148,9 @@ def main():
     print("")
     user_inp=int(input("Input your choice:"))
     if(user_inp==1):
-        show_available_trackers()
+        show_available_trackers() 
     elif(user_inp==2):
-        book()
+        cancel()
     elif(user_inp==3):
         enquiry()
     elif(user_inp==4):
